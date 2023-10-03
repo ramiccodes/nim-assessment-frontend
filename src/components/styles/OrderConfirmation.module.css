@@ -1,0 +1,52 @@
+.thank {
+  font-size: 60px;
+  font-family: Georgia, serif;
+  color: #8500d8;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.receipt {
+  border: 5px solid black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 40rem;
+  margin: auto;
+  width: 50%;
+}
+
+.name {
+  text-align: center;
+  font-size: 40px;
+}
+
+.address {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.id {
+  font-size: 35px;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.ordered {
+  margin-top: 2rem;
+  font-size: 40px;
+  color: #8500d8;
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+ul {
+  text-align: center;
+}
+
+.items {
+  list-style-type: none;
+  font-size: 40px;
+  margin-top: 5rem;
+}
