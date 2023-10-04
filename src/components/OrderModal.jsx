@@ -6,6 +6,7 @@ function OrderModal({ order, setOrderModal }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleNavigateClick = (event) => {
@@ -31,6 +32,45 @@ function OrderModal({ order, setOrderModal }) {
       handleNavigateClick(`/order-confirmation/${data.id}`);
     }
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = {};
+    if (!name.trim()) {
+      validationErrors.name = "Name is required";
+    }
+    if (!phone.trim()) {
+      validationErrors.name = "Phone Number is required";
+    }
+    if (!address.trim()) {
+      validationErrors.name = "Address is required";
+    }
+
+    setErrors(validationErrors);
+  };
+  const formatPhoneNumber = (value) => {
+    if (!value) {
+      return value;
+    }
+    const phoneNumber = value.replace(/[^\d]/g, "");
+    if (phoneNumber.length < 4) {
+      return phoneNumber;
+    }
+    if (phoneNumber.length < 7) {
+      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+    }
+
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+      3,
+      6
+    )}-${phoneNumber.slice(6, 10)}`;
+  };
+
+  const handleInput = (event) => {
+    const formattedPhoneNumber = formatPhoneNumber(event.target.value);
+    setPhone(formattedPhoneNumber);
+  };
+
   return (
     <>
       <div
@@ -47,7 +87,7 @@ function OrderModal({ order, setOrderModal }) {
       />
       <div className={styles.orderModalContent}>
         <h2>Place Order</h2>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="name">
               Name
@@ -58,7 +98,10 @@ function OrderModal({ order, setOrderModal }) {
                 }}
                 type="text"
                 id="name"
+                maxLength={10}
+                required
               />
+              {errors.name && <span>{errors.name}</span>}
             </label>
           </div>
           <div className={styles.formGroup}>
@@ -66,12 +109,14 @@ function OrderModal({ order, setOrderModal }) {
               Phone
               <input
                 onChange={(e) => {
-                  e.preventDefault();
-                  setPhone(e.target.value);
+                  handleInput(e);
+                  console.log(phone);
                 }}
-                type="phone"
+                value={phone}
                 id="phone"
+                required
               />
+              {errors.phone && <span>{errors.phone}</span>}
             </label>
           </div>
           <div className={styles.formGroup}>
@@ -84,7 +129,9 @@ function OrderModal({ order, setOrderModal }) {
                 }}
                 type="phone"
                 id="address"
+                required
               />
+              {errors.address && <span>{errors.address}</span>}
             </label>
           </div>
         </form>
